@@ -20,17 +20,36 @@ public function create(){
     return view('tasks.create');
 }
 public function store(Request $request){
-    $imagePath = null;
-    if($request->hasFile('image')){
-        $imagePath = $request->file('image')->store('tasks', 'public');
 
-    }
+    $request->validate([
+        'title' => 'required|alpha|min:10',
+        'description' => 'required',
+        'image'   => 'required|image|mimes:jpeg,png,jpg|max:2048'
+
+    ],[
+        'title.required' => 'Title lagbe',
+        'title.alpha' => 'just letter dite hobe'
+    ]);
+
+
+    // $imagePath = null;
+    // if($request->hasFile('image')){
+    //     $imagePath = $request->file('image')->store('newFolder', 'public');
+
+    // }
+
+      if($request->hasFile('image')){
+        $file = $request->file('image');
+        $fileName = 'img'.time().'_'.$file->getClientOriginalName();
+        $fileParth = $file->storeAs('newFolder',$fileName,'public');
+      }
+
       DB::table('tasks')->insert([
         'title' => $request->title,
         'description' => $request->description,
-        'image' => $imagePath,
-         'created_at' => now(),
-         'updated_at'  => now(),
+        'image' => $fileParth,
+        'created_at' => now(),
+        'updated_at'  => now(),
       ]);
 
       return redirect()->route('tasks.index')->with('success','Task created successfully');
@@ -62,8 +81,8 @@ if($request->hasFile('image')){
 
 
  public function edit($id){
- $task = DB::table('tasks')->where('id',$id)->first();
- return view('tasks.edit',compact('task'));
+    $task = DB::table('tasks')->where('id',$id)->first();
+    return view('tasks.edit',compact('task'));
  }
 
 
