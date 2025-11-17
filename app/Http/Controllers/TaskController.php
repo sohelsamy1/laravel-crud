@@ -22,7 +22,7 @@ public function create(){
 public function store(Request $request){
 
     $request->validate([
-        'title' => 'required|alpha|min:10',
+        'title' => 'required|alpha|max:50|unique:tasks,title',
         'description' => 'required',
         'image'   => 'required|image|mimes:jpeg,png,jpg|max:2048'
 
