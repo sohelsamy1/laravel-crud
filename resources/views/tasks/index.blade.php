@@ -29,7 +29,7 @@
         <td>{{ $task->description }}</td>
         <td>
             @if($task->image)
-            <img src=" {{ asset('storage/newFolder/'.$task->image) }} " width="100">
+            <img src=" {{ asset('storage/'.$task->image) }} " width="100">
             @else
                N/A
             @endif
