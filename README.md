@@ -47,8 +47,7 @@ php artisan serve
 
 ## 👤 Author
 
-**Sohel Samy**  
-Laravel | Vue | React Developer  
-
-GitHub: https://github.com/sohelsamy1  
+**Sohel Samy**   
+Laravel | Vue | React Developer   
+GitHub: https://github.com/sohelsamy1   
 LinkedIn: https://linkedin.com/in/sohelsamy
