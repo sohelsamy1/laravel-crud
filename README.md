@@ -6,6 +6,26 @@ This project showcases basic Create, Read, Update, and Delete (CRUD) operations 
 
 ---
 
+# Task Management App Screenshots
+
+Here are some screenshots demonstrating the main functionalities and validation in the app:
+
+## Task List
+![Task List](screenshots/task-list.png)
+*Shows the list of all tasks.*
+
+## Create Task
+![Create Task](screenshots/create-task.png)
+*Form for creating a new task with validation.*
+
+## Edit Task
+![Edit Task](screenshots/edit-task.png)
+*Edit an existing task. Validation is applied to ensure correct input.*
+
+ **Note:** All forms have proper validation to prevent invalid data submission.
+
+---
+
 ## 🚀 Features
 - Create, Read, Update, and Delete (CRUD) operations
 - Laravel MVC architecture
