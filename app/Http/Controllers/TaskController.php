@@ -16,4 +16,9 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
+     public function edit()
+    {
+           return view('tasks.edit');
+    }
+
 }
