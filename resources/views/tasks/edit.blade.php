@@ -19,7 +19,7 @@
 </div>
 
 <div class="mb-3">
-    <label> Title </label>
+    <label> Image </label>
     <input type="file" name="image" class="form-control" >
     @if ($task->image)
 
