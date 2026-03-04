@@ -25,7 +25,7 @@
   <tbody>
       @foreach ($tasks as $task)
        <tr>
-        <td>{{ $loop->iteration }}</td>
+        <td>{{ $loop->iteration + $tasks->firstitem() - 1 }}</td>
         <td>{{ $task->title }}</td>
         <td>{{ $task->description }}</td>
         <td>
@@ -36,7 +36,7 @@
             @endif
         </td>
        <td><a href="{{ route('tasks.edit',$task->id) }}" class="btn btn-warning btn-sm">Edit</a>
-        
+
         <form action="{{ route('tasks.destroy',$task->id) }}" method="POST" style="display: inline-block" >
            @csrf
             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete this?')" >Delete</button>
@@ -48,4 +48,5 @@
    </tbody>
 </table>
 
+ {{ $tasks->links() }}
 @endsection

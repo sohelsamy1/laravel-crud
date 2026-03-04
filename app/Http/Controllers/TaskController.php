@@ -9,12 +9,9 @@ use Illuminate\Support\Facades\Storage;
 class TaskController extends Controller
 {
 
-    public function index()
+     public function index()
     {
-        $tasks = DB::table('tasks')
-                    ->orderBy('id', 'desc')
-                    ->get();
-
+        $tasks = DB::table('tasks')->orderBy('id', 'desc')->paginate(3);
         return view('tasks.index', compact('tasks'));
     }
 
