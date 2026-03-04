@@ -21,30 +21,36 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-
     public function store(Request $request)
     {
-    $fileParth = null;
+        $request->validate([
+            'title'       => 'required|string|max:50|unique:tasks,title',
+            'description' => 'required|string',
+            'image'       => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ], [
+            'title.required' => 'Title lagbe',
+            'title.string'   => 'Valid title dite hobe'
+        ]);
 
-    if ($request->hasFile('image')) {
+        $filePath = null;
 
-        $file = $request->file('image');
-        $fileName = 'img' . time() . '_' . $file->getClientOriginalName();
-        $fileParth = $file->storeAs('newFolder', $fileName, 'public');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = 'img' . time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('newFolder', $fileName, 'public');
+        }
+
+        DB::table('tasks')->insert([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'image'       => $filePath,
+            'created_at'  => now(),
+            'updated_at'  => now(),
+        ]);
+
+        return redirect()->route('tasks.index')
+                        ->with('success', 'Task created successfully');
     }
-
-    DB::table('tasks')->insert([
-        'title'       => $request->title,
-        'description' => $request->description,
-        'image'       => $fileParth,
-        'created_at'  => now(),
-        'updated_at'  => now(),
-    ]);
-
-    return redirect()->route('tasks.index')
-                     ->with('success', 'Task created successfully');
-    }
-
 
     public function update(Request $request, $id)
     {
