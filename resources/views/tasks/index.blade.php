@@ -36,7 +36,7 @@
             @endif
         </td>
         <td>
-            <button class="btn btn-warning btn-sm">Edit</button>
+            <a href="{{ route('tasks.edit',$task->id) }}" class="btn btn-warning btn-sm">Edit</a>
             <button class="btn btn-danger btn-sm">Delete</button>
         </td>
        </tr>

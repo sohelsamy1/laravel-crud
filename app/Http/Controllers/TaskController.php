@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -48,9 +49,39 @@ class TaskController extends Controller
     }
 
 
-    public function edit()
+    public function update(Request $request, $id)
     {
-        return view('tasks.edit');
+        $task = DB::table('tasks')->where('id', $id)->first();
+
+        if (!$task) {
+            return redirect()->route('tasks.index')
+                            ->with('error', 'Task not found');
+        }
+
+        $imagePath = $task->image;
+        if ($request->hasFile('image')) {
+            if ($task->image && Storage::disk('public')->exists($task->image)) {
+                Storage::disk('public')->delete($task->image);
+            }
+            $imagePath = $request->file('image')->store('tasks', 'public');
+        }
+
+        DB::table('tasks')->where('id', $id)->update([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'image'       => $imagePath,
+            'updated_at'  => now(),
+        ]);
+
+        return redirect()->route('tasks.index')
+                        ->with('success', 'Task updated successfully');
+    }
+
+
+   public function edit($id)
+    {
+        $task = DB::table('tasks')->where('id', $id)->first();
+        return view('tasks.edit', compact('task'));
     }
 
 }
