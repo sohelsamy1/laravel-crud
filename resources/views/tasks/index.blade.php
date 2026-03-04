@@ -3,9 +3,13 @@
 @section('content')
 
 <h2> Task List</h2>
-<a href="#" class="btn btn-primary mb-3"> +Add Task</a>
+<a href="{{ route('tasks.create')}}" class="btn btn-primary mb-3"> +Add Task</a>
 
-<div class="alert alert-success">Task created successfully</div>
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
 
 <table class="table table-bordered">
   <thead>
@@ -19,31 +23,25 @@
   </thead>
 
   <tbody>
+      @foreach ($tasks as $task)
        <tr>
-        <td>1</td>
-        <td>Sample Task</td>
-        <td>This is a sample task description</td>
-        <td><img src="path/to/image.jpg" width="100"></td>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $task->title }}</td>
+        <td>{{ $task->description }}</td>
         <td>
-            <a href="#" class="btn btn-warning btn-sm">Edit</a>
-            <form action="#" method="POST" style="display: inline-block">
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+            @if($task->image)
+                <img src="{{ asset('storage/'.$task->image) }}" width="100">
+            @else
+                N/A
+            @endif
+        </td>
+        <td>
+            <button class="btn btn-warning btn-sm">Edit</button>
+            <button class="btn btn-danger btn-sm">Delete</button>
         </td>
        </tr>
-       <tr>
-        <td>2</td>
-        <td>Another Task</td>
-        <td>Another description</td>
-        <td>N/A</td>
-        <td>
-            <a href="#" class="btn btn-warning btn-sm">Edit</a>
-            <form action="#" method="POST" style="display: inline-block">
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-        </td>
-       </tr>
-  </tbody>
+      @endforeach
+   </tbody>
 </table>
 
 @endsection
