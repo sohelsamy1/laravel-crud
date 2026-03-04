@@ -84,4 +84,19 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
+
+    public function destroy($id)
+    {
+        $task = DB::table('tasks')->where('id', $id)->first();
+
+        if ($task->image && Storage::disk('public')->exists($task->image)) {
+            Storage::disk('public')->delete($task->image);
+        }
+
+        DB::table('tasks')->where('id', $id)->delete();
+
+        return redirect()->route('tasks.index')
+                         ->with('success', 'Task created successfully');
+    }
+
 }

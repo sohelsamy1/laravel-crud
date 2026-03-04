@@ -35,9 +35,13 @@
                 N/A
             @endif
         </td>
-        <td>
-            <a href="{{ route('tasks.edit',$task->id) }}" class="btn btn-warning btn-sm">Edit</a>
-            <button class="btn btn-danger btn-sm">Delete</button>
+       <td><a href="{{ route('tasks.edit',$task->id) }}" class="btn btn-warning btn-sm">Edit</a>
+        
+        <form action="{{ route('tasks.destroy',$task->id) }}" method="POST" style="display: inline-block" >
+           @csrf
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete this?')" >Delete</button>
+        </form>
+
         </td>
        </tr>
       @endforeach
